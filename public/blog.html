@@ -1,0 +1,34 @@
+<div>
+  <h1>My blog</h1>
+  <div id="articles">ここに記事はいるよ</div>
+</div>
+
+<script>
+  const displayArticles = async () => {
+    const res = await fetch("/articles");
+    const articles = await res.json();
+
+    console.log("displayArticles articles", articles);
+
+    const container = document.querySelector("#articles");
+    container.innerHTML = "";
+
+    articles.forEach((article) => {
+      // Image
+      const image = document.createElement("img");
+      image.setAttribute("src", article.thumbnail[0].url);
+      container.appendChild(image);
+
+      // Title
+      const title = document.createElement("h3");
+      title.innerText = article.title;
+      container.appendChild(title);
+
+      // Content
+      const content = document.createElement("div");
+      content.innerText = article.content;
+      container.appendChild(content);
+    });
+  };
+  displayArticles();
+</script>
